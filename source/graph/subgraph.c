@@ -28,6 +28,7 @@
 #include "utility/sys_port.h"
 #include "device/device.h"
 #include "api/c_api.h"
+#include "utility/log.h"
 
 void init_ir_subgraph(struct graph* graph, struct subgraph* subgraph, int index)
 {
@@ -59,4 +60,27 @@ void release_ir_subgraph(struct graph* graph, struct subgraph* subgraph)
     sys_free(subgraph->output_tensor_list);
     sys_free(subgraph->node_list);
     sys_free(subgraph);
+}
+
+void dump_ir_subgraph(struct subgraph* subgraph)
+{
+    TLOG_INFO("\nsubgraph index: %d\n", subgraph->index);
+    struct device* device = subgraph->device;
+    TLOG_INFO("\nsubgraph device name: %s\n", device->name);
+    TLOG_INFO("\nsubgraph nodes: %d\n", subgraph->node_num);
+    for (int i = 0; i < subgraph->node_num; i++)
+    {
+        TLOG_INFO("%d  ", subgraph->node_list[i]);
+    }
+    TLOG_INFO("\nsubgraph input tensors: %d\n", subgraph->input_num);
+    for (int i = 0; i < subgraph->input_num; i++)
+    {
+        TLOG_INFO("%d  ", subgraph->input_tensor_list[i]);
+    }
+    TLOG_INFO("\nsubgraph output tensors: %d\n", subgraph->output_num);
+    for (int i = 0; i < subgraph->output_num; i++)
+    {
+        TLOG_INFO("%d  ", subgraph->output_tensor_list[i]);
+    }
+    TLOG_INFO("\n");
 }

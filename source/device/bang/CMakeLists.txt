@@ -1,0 +1,64 @@
+# 1. clear var
+UNSET (_DEV_BANG_HEADER_PATH)
+UNSET (_BANG_BASE_SOURCE)
+UNSET (_BANG_OPS_SOURCE)
+UNSET (_DEV_BANG_DEVICE_SOURCE)
+UNSET (_DEV_BANG_COMPILER_DEFINES)
+UNSET (_DEV_BANG_COMPILER_OPTIONS)
+UNSET (_DEV_BANG_LINKER_OPTIONS)
+UNSET (_DEV_BANG_LINK_LIBRARIES)
+
+
+# 2.  set source root path
+SET(_BANG_ROOT ${CMAKE_SOURCE_DIR}/source/device/bang)
+
+
+# 3.  add header file path
+LIST (APPEND _DEV_BANG_HEADER_PATH      ${_BANG_ROOT})
+LIST (APPEND _DEV_BANG_HEADER_PATH      ${CNRT_INCLUDE_DIR})
+LIST (APPEND _DEV_BANG_HEADER_PATH      ${CNNL_INCLUDE_DIR})
+
+
+# 4.  add linking lib searching path
+LIST (APPEND _DEV_BANG_LINK_PATH        ${CNRT_LIBRARY_DIR})
+LIST (APPEND _DEV_BANG_LINK_PATH        ${CNNL_LIBRARY_DIR})
+
+
+# 5.  add source files
+AUX_SOURCE_DIRECTORY("${_BANG_ROOT}"    _BANG_BASE_SOURCE)
+AUX_SOURCE_DIRECTORY("${_BANG_ROOT}/op" _BANG_OPS_SOURCE)
+LIST (APPEND _DEV_BANG_DEVICE_SOURCE    ${_BANG_BASE_SOURCE})
+LIST (APPEND _DEV_BANG_DEVICE_SOURCE    ${_BANG_OPS_SOURCE})
+
+
+# 6.  add build options for cpu device
+# 6.1 is a gcc or clang like compiler
+IF (TENGINE_COMPILER_GCC OR TENGINE_COMPILER_CLANG)
+ENDIF()
+
+
+# 6.2 is Microsoft Visual C++
+IF (TENGINE_COMPILER_MSVC)
+ENDIF()
+
+
+# 7.  add link options
+
+
+# 8.  add link libs
+LIST (APPEND _DEV_BANG_LINK_LIBRARIES   ${CNRT_LIBRARY})
+LIST (APPEND _DEV_BANG_LINK_LIBRARIES   ${CNNL_LIBRARY})
+
+MESSAGE(STATUS "bang header path: ${_DEV_BANG_HEADER_PATH}")
+MESSAGE(STATUS "bang link path: ${_DEV_BANG_LINK_PATH}")
+MESSAGE(STATUS "bang link libraries: ${_DEV_BANG_LINK_LIBRARIES}")
+
+
+# 9. set all to cmake cache
+SET (TENGINE_BANG_HEADER_PATH       ${_DEV_BANG_HEADER_PATH}        CACHE INTERNAL  "Tengine BANG device header files searching path"   FORCE)
+SET (TENGINE_BANG_LINK_PATH         ${_DEV_BANG_LINK_PATH}          CACHE INTERNAL  "Tengine BANG device link libraries searching path" FORCE)
+SET (TENGINE_BANG_DEVICE_SOURCE     ${_DEV_BANG_DEVICE_SOURCE}      CACHE INTERNAL  "Tengine BANG device main source files"             FORCE)
+SET (TENGINE_BANG_COMPILER_DEFINES  ${_DEV_BANG_COMPILER_DEFINES}   CACHE INTERNAL  "Tengine BANG about compiler defines"               FORCE)
+SET (TENGINE_BANG_COMPILER_OPTIONS  ${_DEV_BANG_COMPILER_OPTIONS}   CACHE INTERNAL  "Tengine BANG about compiler options"               FORCE)
+SET (TENGINE_BANG_LINKER_OPTIONS    ${_DEV_BANG_LINKER_OPTIONS}     CACHE INTERNAL  "Tengine BANG about linker options"                 FORCE)
+SET (TENGINE_BANG_LINK_LIBRARIES    ${_DEV_BANG_LINK_LIBRARIES}     CACHE INTERNAL  "Tengine BANG about link libraries"                 FORCE)

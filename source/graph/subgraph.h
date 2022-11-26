@@ -71,3 +71,10 @@ void init_ir_subgraph(struct graph* graph, ir_subgraph_t* subgraph, int index);
  * @param [in]  subgraph: specific subgraph.
  */
 void release_ir_subgraph(struct graph* ir_graph, ir_subgraph_t* ir_subgraph);
+
+/*!
+ * @brief  Dump the subgraph.
+ *
+ * @param [in]  subgraph: specific subgraph.
+ */
+void dump_ir_subgraph(ir_subgraph_t* ir_subgraph);

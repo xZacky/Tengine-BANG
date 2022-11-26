@@ -77,6 +77,10 @@ IF(TENGINE_ENABLE_ACL)
     TENGINE_EXAMPLE (tm_mobilenet_ssd_acl        tm_mobilenet_ssd_acl.c)
 ENDIF()
 
+IF(TENGINE_ENABLE_BANG)
+    TENGINE_EXAMPLE (tm_classification_bang      tm_classification_bang.c)
+ENDIF()
+
 IF(TENGINE_ENABLE_CUDA)
     TENGINE_EXAMPLE (tm_classification_cuda      tm_classification_cuda.cpp)
 ENDIF()

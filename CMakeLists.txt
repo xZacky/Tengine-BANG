@@ -73,6 +73,7 @@ OPTION (TENGINE_STANDALONE_HCL_AUTO_LOAD    "Auto load standalone hcl lib"      
 
 # Plugin options
 OPTION (TENGINE_ENABLE_ACL                  "With Arm Compute Library support"          OFF)
+OPTION (TENGINE_ENABLE_BANG                 "With Cambricon BANG support"               OFF)
 OPTION (TENGINE_ENABLE_CUDA                 "With nVIDIA CUDA support"                  OFF)
 OPTION (TENGINE_ENABLE_OPENCL               "With Khronos OpenCL support"               OFF)
 OPTION (TENGINE_ENABLE_OPENDLA              "With Khronos OpenDLA support"              OFF)
@@ -96,6 +97,7 @@ OPTION (TENGINE_ONLINE_REPORT               "online report"                     
 
 # Do check list
 INCLUDE ("${CMAKE_CURRENT_SOURCE_DIR}/cmake/check.cmake")
+INCLUDE ("${CMAKE_CURRENT_SOURCE_DIR}/cmake/bang.cmake")
 INCLUDE ("${CMAKE_CURRENT_SOURCE_DIR}/cmake/cuda.cmake")
 INCLUDE ("${CMAKE_CURRENT_SOURCE_DIR}/cmake/torch.cmake")
 INCLUDE ("${CMAKE_CURRENT_SOURCE_DIR}/cmake/registry.cmake")

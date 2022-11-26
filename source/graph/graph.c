@@ -274,8 +274,9 @@ int infer_ir_graph_shape(ir_graph_t* graph)
 
 void dump_ir_graph(ir_graph_t* graph)
 {
+    int subgraph_num = get_vector_num(graph->subgraph_list);
     TLOG_INFO("graph node_num %u tensor_num: %u  subgraph_num: %u\n", graph->node_num, graph->tensor_num,
-              get_vector_num(graph->subgraph_list));
+              subgraph_num);
 
     TLOG_INFO("graph layout: %s model layout: %s model_format: %s\n", get_tensor_layout_string(graph->graph_layout),
               get_tensor_layout_string(graph->model_layout), get_model_format_string(graph->model_format));
@@ -315,5 +316,9 @@ void dump_ir_graph(ir_graph_t* graph)
         {
             TLOG_INFO("\tnode_%d\n", node->index);
         }
+    }
+
+    for (int i = 0; i < subgraph_num; i++) {
+        dump_ir_subgraph(get_ir_graph_subgraph(graph, i));
     }
 }
