@@ -66,11 +66,14 @@ void pooling_mlu_kernel(cnnlHandle_t handle, cnrtQueue_t queue, struct graph* ir
     cnnlSetTensorDescriptor(input_desc, CNNL_LAYOUT_NHWC, CNNL_DTYPE_FLOAT, 4, pool_input_data->dims);
 
     /* set output data layout and shape */
-    pool_output_data->layout = 1;
-    int tmp = pool_output_data->dims[3];
-    pool_output_data->dims[3] = pool_output_data->dims[1];
-    pool_output_data->dims[1] = pool_output_data->dims[2];
-    pool_output_data->dims[2] = tmp;
+    if (pool_output_data->layout == 0)
+    {
+        pool_output_data->layout = 1;
+        int tmp = pool_output_data->dims[3];
+        pool_output_data->dims[3] = pool_output_data->dims[1];
+        pool_output_data->dims[1] = pool_output_data->dims[2];
+        pool_output_data->dims[2] = tmp;
+    }
 
     // output descriptor
     cnnlTensorDescriptor_t output_desc;

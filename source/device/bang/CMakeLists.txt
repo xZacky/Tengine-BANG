@@ -49,10 +49,6 @@ ENDIF()
 LIST (APPEND _DEV_BANG_LINK_LIBRARIES   ${CNRT_LIBRARY})
 LIST (APPEND _DEV_BANG_LINK_LIBRARIES   ${CNNL_LIBRARY})
 
-MESSAGE(STATUS "bang header path: ${_DEV_BANG_HEADER_PATH}")
-MESSAGE(STATUS "bang link path: ${_DEV_BANG_LINK_PATH}")
-MESSAGE(STATUS "bang link libraries: ${_DEV_BANG_LINK_LIBRARIES}")
-
 
 # 9. set all to cmake cache
 SET (TENGINE_BANG_HEADER_PATH       ${_DEV_BANG_HEADER_PATH}        CACHE INTERNAL  "Tengine BANG device header files searching path"   FORCE)

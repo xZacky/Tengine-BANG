@@ -33,6 +33,15 @@ void BANGEngine::BANGDataMalloc(struct graph* ir_graph, int ir_tensor_idx)
 void BANGEngine::DataUpload(struct graph* ir_graph, int ir_tensor_idx)
 {
     struct tensor* ir_tensor = get_ir_graph_tensor(ir_graph, ir_tensor_idx);
+    /* upload tensor layout is nchw, if its layout is nhwc, recover it */
+    if (ir_tensor->layout == 1)
+    {
+        int tmp = ir_tensor->dims[3];
+        ir_tensor->dims[3] = ir_tensor->dims[2];
+        ir_tensor->dims[2] = ir_tensor->dims[1];
+        ir_tensor->dims[1] = tmp;
+        ir_tensor->layout = 0;
+    }
     cnrtMemcpy(this->mlu_addr_map[ir_tensor_idx], ir_tensor->data, ir_tensor->elem_num * ir_tensor->elem_size, cnrtMemcpyHostToDev);
 }
 

@@ -116,12 +116,15 @@ void conv_mlu_kernel(cnnlHandle_t handle, cnrtQueue_t queue, struct graph* ir_gr
     cnnlSetTensorDescriptor(filter_desc, CNNL_LAYOUT_NHWC, CNNL_DTYPE_FLOAT, 4, conv_weight->dims);
 
     /* set output data layout and shape */
-    conv_output_data->layout = 1;
-    int tmp = conv_output_data->dims[3];
-    conv_output_data->dims[3] = conv_output_data->dims[1];
-    conv_output_data->dims[1] = conv_output_data->dims[2];
-    conv_output_data->dims[2] = tmp;
-
+    if (conv_output_data->layout == 0)
+    {
+        conv_output_data->layout = 1;
+        int tmp = conv_output_data->dims[3];
+        conv_output_data->dims[3] = conv_output_data->dims[1];
+        conv_output_data->dims[1] = conv_output_data->dims[2];
+        conv_output_data->dims[2] = tmp;
+    }
+    
     // output descriptor
     cnnlTensorDescriptor_t output_desc;
     cnnlCreateTensorDescriptor(&output_desc);
